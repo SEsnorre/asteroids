@@ -12,11 +12,13 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
     
     # add classes to Groups
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
+    Shot.containers = (shots, updatable, drawable)
     
     # create display
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -48,6 +50,10 @@ def main():
             if object.is_colliding(player):
                 print("Game Over!")
                 return
+            for bullet in shots:
+                if bullet.is_colliding(object):
+                    object.split()
+                    bullet.kill()
         # update screen
         pygame.display.flip()
         # pause game for 1/60 and pass passed time to dt
